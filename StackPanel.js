@@ -123,7 +123,7 @@ Jarvus.mobile.StackPanel = Ext.extend(Ext.Panel, {
 			return false;
 		}
 
-		this.setTitleBarVisible(!card.hideTitleBar);
+		this.setTitleBarVisible(typeof card.hideTitleBar=='undefined' || !card.hideTitleBar);
 
 		var afterRun = false
 			,cardLoaded = function() {
@@ -188,7 +188,7 @@ Jarvus.mobile.StackPanel = Ext.extend(Ext.Panel, {
 			return false;
 		}
 
-		this.setTitleBarVisible(!prevCard.hideTitleBar);
+		this.setTitleBarVisible(typeof prevCard.hideTitleBar=='undefined' || !prevCard.hideTitleBar);
 
 		// remove last card
 		this.setBackVisible(this.items.length > 2);

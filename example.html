@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>StackPanel Example</title>
+		
+		<link rel="stylesheet" type="text/css" href="http://dev.sencha.com/deploy/touch/resources/css/sencha-touch.css">
+		<script type="text/javascript" src="http://dev.sencha.com/deploy/touch/sencha-touch.js"></script>
+		
+
+		<script type="text/javascript" src="StackPanel.js"></script>
+		
+		<script type="text/javascript">
+			Ext.regApplication({
+			
+			    name: 'SampleApp'
+			    
+			    ,launch: function() {
+			    
+					// launch the StackPanel-powered viewport
+				    this.views.viewport = new Jarvus.mobile.StackPanel({
+				    	fullscreen: true
+				    	
+				    	,title: 'Main App Title' // StackPanel: default title unless loaded card provides an override
+
+						// override buildItems to configure an initially loaded card(s)
+						,buildItems: function() {
+						
+							return [{
+								xtype: 'container'
+					    	
+								,prevTitle: 'Home' // StackPanel: change the "Back" buttons label when this card is the destination									
+								// container layout+items					
+								,layout: {type: 'vbox', align: 'center'}
+								,items: [{
+									xtype: 'component'
+									,html: 'home card goes here.'
+								},{
+									xtype: 'button'
+									,text: 'Click for card 2'
+									,handler: function() {
+									
+										// need a ref to the viewport... use global or this.ownerCt
+										SampleApp.views.viewport.loadCard(new SampleApp.views.CardTwo());
+										
+									}
+								}] // end items list
+								
+					    	}]; // end return value
+							
+						} // end buildItems
+
+				    }); // end StackPanel constructor
+				    
+				    
+				    
+			    }
+			    
+			
+			});
+		</script>
+		
+		
+		<script type="text/javascript">
+		// define some dummy cards we can load		
+		SampleApp.views.CardTwo = Ext.extend(Ext.Container, {
+    		title: 'Card 2'
+			
+			,layout: {type: 'vbox', align: 'center'}
+			,items: [{
+				xtype: 'button'
+				,text: 'Click for card 3'
+				,handler: function() {
+				
+					// need a ref to the viewport... use global or this.ownerCt
+					SampleApp.views.viewport.loadCard(new SampleApp.views.CardThree());
+					
+				}
+			}]
+		});
+		
+		SampleApp.views.CardThree = Ext.extend(Ext.Container, {
+			hideTitleBar: true // StackPanel: hide the app title bar when we arrive at this card
+			
+			,html: '<h2>card 3 goes fullscreen!</h2>'
+					+'<a href="javascript:SampleApp.views.viewport.goBack()">go back!</a>' // yuck! but you can do it
+		});
+		</script>
+		
+		
+	</head>
+
+	<body></body>
+</html>
